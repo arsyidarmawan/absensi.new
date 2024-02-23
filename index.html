@@ -19,6 +19,35 @@
     >Memuat
   </iframe>
 
+  <!-- Notifikasi izin lokasi -->
+  <script>
+    // Fungsi untuk meminta izin lokasi pengguna
+    function askForLocationPermission() {
+      // Periksa apakah browser mendukung Geolocation API
+      if ("geolocation" in navigator) {
+        // Jika mendukung, minta izin lokasi
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            // Jika pengguna memberikan izin, lakukan sesuatu dengan lokasinya
+            console.log("Lokasi pengguna diperoleh:", position.coords);
+          },
+          function (error) {
+            // Jika terjadi kesalahan, tampilkan pesan kesalahan
+            console.error("Kesalahan dalam memperoleh lokasi pengguna:", error.message);
+          }
+        );
+      } else {
+        // Jika browser tidak mendukung Geolocation API, tampilkan pesan kesalahan
+        console.error("Browser tidak mendukung Geolocation API.");
+      }
+    }
+
+    // Panggil fungsi untuk meminta izin lokasi ketika halaman dimuat
+    window.onload = function () {
+      askForLocationPermission();
+    };
+  </script>
+
   <script type="text/javascript">
     var load = 0;
     // sesuaikan id gform dengan id yang ada pada tag iframe di atas
@@ -26,21 +55,8 @@
       load++;
       if (load > 2) {
         // ganti url dibawah dengan url webapp anda
-        document.location = "https://script.google.com/macros/s/AKfycbxaEN0CH6KESv5NXQ74QEI9-BB4KXpPcoU-jRGGUjwEQUS5B0edmMbe3mRalLLG5p9p1Q/exec";
-      }
-    };
-
-    // Meminta izin lokasi saat halaman dimuat
-    window.onload = function() {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          console.log("Lokasi pengguna:", position.coords.latitude, position.coords.longitude);
-          // Di sini Anda dapat menambahkan logika lebih lanjut, misalnya mengirimkan lokasi ke server
-        }, function(error) {
-          console.error("Error mendapatkan lokasi:", error.message);
-        });
-      } else {
-        console.error("Geolokasi tidak didukung di perangkat ini.");
+        document.location =
+          "https://script.google.com/macros/s/AKfycbxaEN0CH6KESv5NXQ74QEI9-BB4KXpPcoU-jRGGUjwEQUS5B0edmMbe3mRalLLG5p9p1Q/exec";
       }
     };
   </script>
