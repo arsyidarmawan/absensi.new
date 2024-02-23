@@ -1,64 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Absen</title>
-</head>
-<body>
-  <!-- ganti src url dengan url form anda -->
-  <iframe
-    id="gform"
-    src="https://docs.google.com/forms/d/e/1FAIpQLScWZcC3z-ZtqibqPrJGw4DZbXC86_kE4BVEOIM5Qm64IYGYNA/viewform?embedded=true"
-    width="100%"
-    height="720"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    >Memuat
-  </iframe>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Absen</title>
+  </head>
 
-  <!-- Notifikasi izin lokasi -->
-  <script>
-    // Fungsi untuk meminta izin lokasi pengguna
-    function askForLocationPermission() {
-      // Periksa apakah browser mendukung Geolocation API
-      if ("geolocation" in navigator) {
-        // Jika mendukung, minta izin lokasi
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            // Jika pengguna memberikan izin, lakukan sesuatu dengan lokasinya
-            console.log("Lokasi pengguna diperoleh:", position.coords);
-          },
-          function (error) {
-            // Jika terjadi kesalahan, tampilkan pesan kesalahan
-            console.error("Kesalahan dalam memperoleh lokasi pengguna:", error.message);
-          }
-        );
-      } else {
-        // Jika browser tidak mendukung Geolocation API, tampilkan pesan kesalahan
-        console.error("Browser tidak mendukung Geolocation API.");
-      }
-    }
+  <body>
+    <!-- ganti src url dengan url form anda -->
+    <iframe
+      id="gform"
+      src="https://docs.google.com/forms/d/e/1FAIpQLScWZcC3z-ZtqibqPrJGw4DZbXC86_kE4BVEOIM5Qm64IYGYNA/viewform?embedded=true"
+      width="100%"
+      height="720"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0"
+      >Memuat
+    </iframe>
 
-    // Panggil fungsi untuk meminta izin lokasi ketika halaman dimuat
-    window.onload = function () {
-      askForLocationPermission();
-    };
-  </script>
+    <noscript>
+      <p>Mohon aktifkan JavaScript untuk mengakses formulir absen.</p>
+    </noscript>
 
-  <script type="text/javascript">
-    var load = 0;
-    // sesuaikan id gform dengan id yang ada pada tag iframe di atas
-    document.getElementById("gform").onload = function () {
-      load++;
-      if (load > 2) {
-        // ganti url dibawah dengan url webapp anda
-        document.location =
-          "https://script.google.com/macros/s/AKfycbxaEN0CH6KESv5NXQ74QEI9-BB4KXpPcoU-jRGGUjwEQUS5B0edmMbe3mRalLLG5p9p1Q/exec";
-      }
-    };
-  </script>
-</body>
+    <script type="text/javascript">
+      window.onload = function () {
+        // Memeriksa apakah GPS diaktifkan saat dokumen selesai dimuat
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              // GPS diaktifkan
+            },
+            function (error) {
+              if (error.code == error.PERMISSION_DENIED) {
+                // GPS tidak diaktifkan, arahkan pengguna untuk mengaktifkannya
+                alert("Mohon aktifkan GPS untuk menggunakan layanan ini.");
+              } else {
+                // Kesalahan lain dalam mendapatkan lokasi
+                alert("Terjadi kesalahan dalam mendapatkan lokasi.");
+              }
+            }
+          );
+        } else {
+          // Geolocation tidak didukung oleh browser
+          alert("Maaf, perangkat Anda tidak mendukung layanan lokasi. Mohon gunakan perangkat lain.");
+        }
+      };
+
+      var load = 0;
+      // sesuaikan id gform dengan id yang ada pada tag iframe di atas
+      document.getElementById("gform").onload = function () {
+        load++;
+        if (load > 2) {
+          // ganti url dibawah dengan url webapp anda
+          document.location =
+            "https://script.google.com/macros/s/AKfycbxaEN0CH6KESv5NXQ74QEI9-BB4KXpPcoU-jRGGUjwEQUS5B0edmMbe3mRalLLG5p9p1Q/exec";
+        }
+      };
+    </script>
+  </body>
 </html>
